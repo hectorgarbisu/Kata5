@@ -5,6 +5,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class ChartHistogramViewer<T> implements HistogramViewer<T> {
 
@@ -13,6 +14,7 @@ public class ChartHistogramViewer<T> implements HistogramViewer<T> {
         JFrame frame = new JFrame("Histogram");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(createChartPanel(histogram));
+        frame.pack();
         frame.setVisible(true);
     }
     
@@ -30,6 +32,10 @@ public class ChartHistogramViewer<T> implements HistogramViewer<T> {
     }
 
     private CategoryDataset createDataSet(Histogram<T> histogram) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (T item : histogram.keySet()) {
+            dataset.addValue(histogram.get(item), "Categories", (String)item);
+        }
+        return dataset;
     }
 }
